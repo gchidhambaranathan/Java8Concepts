@@ -2,7 +2,7 @@ package com.model;
 
 import java.time.LocalDate;
 
-public class Employee {
+public class Employee implements Comparable<Employee>{
 
     private long id;
     private String name;
@@ -41,5 +41,12 @@ public class Employee {
                 ", age=" + age +
                 ", occupation='" + occupation + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Employee o) {
+        if (!(o instanceof Employee))
+           throw new IllegalArgumentException("Illegal Employee object");
+        return this.getName().compareTo(o.getName());
     }
 }

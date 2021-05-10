@@ -1,5 +1,6 @@
 package com.features;
 
+import com.data.StreamData;
 import com.model.Employee;
 
 
@@ -16,7 +17,7 @@ public class StreamTerminalOperation {
         StreamTerminalOperation terminalOperation = new StreamTerminalOperation();
 
         //data to play
-        List<Employee> employees = terminalOperation.prepareData();
+        List<Employee> employees = StreamData.prepareData();
 
         //foreach
         terminalOperation.listStreamForEach(employees);
@@ -46,29 +47,15 @@ public class StreamTerminalOperation {
         //max - get Maximum age employee
         terminalOperation.getMaxAgeEmployee(employees);
 
+
+        // find first element more than age 40
+        terminalOperation.getAgeMoreThanFourtyFindFirst(employees);
+
+        // find any element more than age 40
+        terminalOperation.getAgeMoreThanFourtyFindAny(employees);
     }
 
-    private List<Employee> prepareData() {
-        Employee employee1 = new Employee(1, "Emp1",35, "Senior Developer");
-        Employee employee2 = new Employee(2, "Emp2",40, "Lead Developer");
-        Employee employee3 = new Employee(3, "Emp3",20, "Junior Developer");
-        Employee employee4 = new Employee(4, "Emp4",55, "Manager");
-        Employee employee5 = new Employee(5, "Emp5",28, "UI Developer");
-        Employee employee6 = new Employee(6, "Emp6",42, "Software Architect");
-        Employee employee7 = new Employee(7, "Emp7",27, "Junior Developer");
 
-        List<Employee> employees = new ArrayList<>();
-        employees.add(employee1);
-        employees.add(employee2);
-        employees.add(employee3);
-        employees.add(employee4);
-        employees.add(employee5);
-        employees.add(employee6);
-        employees.add(employee7);
-
-
-        return  employees;
-    }
 
     private void listStreamForEach(List<Employee> employees){
 
@@ -134,6 +121,20 @@ public class StreamTerminalOperation {
     private void getMaxAgeEmployee(List<Employee> employees){
         Optional<Employee> employee = employees.stream().max(Comparator.comparingInt(Employee::getAge));
         System.out.println(employee.toString());
+    }
+
+    private void getAgeMoreThanFourtyFindFirst(List<Employee> employees) {
+        Optional<Employee>  employeeFirst = Optional.ofNullable(employees.stream().filter(employee -> employee.getAge() > 40)
+                .findFirst().orElse(null));
+
+        System.out.println(employeeFirst.toString());
+    }
+
+    private void getAgeMoreThanFourtyFindAny(List<Employee> employees) {
+        Optional<Employee>  employeeFirst = Optional.ofNullable(employees.stream().filter(employee -> employee.getAge() > 40)
+                .findAny().orElse(null));
+
+        System.out.println(employeeFirst.toString());
     }
 
 }
