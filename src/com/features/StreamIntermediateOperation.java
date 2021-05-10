@@ -6,6 +6,7 @@ import com.model.Employee;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 public class StreamIntermediateOperation {
@@ -42,6 +43,9 @@ public class StreamIntermediateOperation {
 
         // sort by age in asecnd-order and skip and limit the output of 2
         intermediateOperation.sortByAgeAndLimitSKipTwoLowerTwoAges(employees);
+
+        //Map to integer age of employee and calculate average age
+        intermediateOperation.mapToPrimitiveType(employees);
     }
 
 
@@ -101,5 +105,11 @@ public class StreamIntermediateOperation {
         System.out.println("***************");
         employees.stream().sorted(Comparator.comparing(Employee::getAge)).skip(2).limit(2)
                 .forEach(employee -> System.out.println(employee.toString()));
+    }
+
+    private void mapToPrimitiveType(List<Employee> employees) {
+        System.out.println("***************");
+        OptionalDouble optionalDouble = employees.stream().mapToInt(value -> value.getAge()).average();
+        System.out.println(optionalDouble.getAsDouble());
     }
 }
